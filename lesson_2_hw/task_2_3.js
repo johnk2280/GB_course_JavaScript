@@ -16,7 +16,7 @@ function getRandomNumber() {
  * @param b
  */
 function compareNumbers(a, b) {
-    if (a > 0 && b > 0) {
+    if (a >= 0 && b >= 0) {
         console.log(`Разность "a" и "b": ${a - b}`)
     } else if (a < 0 && b < 0) {
         console.log(`Произведение "a" и "b": ${a * b}`)
@@ -31,18 +31,20 @@ function compareNumbers(a, b) {
  * @param b
  */
 function compareNumbers2(a, b) {
-    a > 0 && b > 0
-        ? console.log(`Разность "a" и "b": ${a - b}`)
+    let result;
+    result = a >= 0 && b >= 0
+        ? `Разность "a" и "b": ${a - b}`
         : a < 0 && b < 0
-            ? console.log(`Произведение "a" и "b": ${a * b}`)
-            : console.log(`Сумма "a" и "b": ${a + b}`)
+            ? `Произведение "a" и "b": ${a * b}`
+            : `Сумма "a" и "b": ${a + b}`
+    console.log(result)
 }
 
 let a, b;
 a = getRandomNumber()
 b = getRandomNumber()
 
-console.log(`Число 'a': ${a}\nЧисло 'b': ${b}`)
+console.log(`Число 'a': ${a}\nЧисло 'b': ${b}\n`)
 console.log("Результат работы функции: ")
 compareNumbers(a, b)
 compareNumbers2(a, b)
