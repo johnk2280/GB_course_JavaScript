@@ -11,10 +11,20 @@ function getRandomNumber() {
     return Math.floor((Math.random() - 0.5) * 100)
 }
 
+function compareNumbers(a, b) {
+    if (a > 0 && b > 0) {
+        console.log(`Разность "a" и "b": ${a - b}`)
+    } else if (a < 0 && b < 0) {
+        console.log(`Произведение "a" и "b": ${a * b}`)
+    } else {
+        console.log(`Сумма "a" и "b": ${a + b}`)
+    }
+}
+
 let a, b;
 a = getRandomNumber()
 b = getRandomNumber()
-console.log(a, b)
 
-
-
+console.log(`Число 'a': ${a}\nЧисло 'b': ${b}`)
+console.log("Результат работы функции: ")
+compareNumbers(a, b)
