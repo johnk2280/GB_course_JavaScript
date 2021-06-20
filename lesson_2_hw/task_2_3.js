@@ -6,11 +6,15 @@
  * если а и b разных знаков, вывести их сумму; ноль можно считать положительным числом.
  */
 
-
 function getRandomNumber() {
     return Math.floor((Math.random() - 0.5) * 100)
 }
 
+/**
+ * Классическое ветвление.
+ * @param a
+ * @param b
+ */
 function compareNumbers(a, b) {
     if (a > 0 && b > 0) {
         console.log(`Разность "a" и "b": ${a - b}`)
@@ -21,6 +25,19 @@ function compareNumbers(a, b) {
     }
 }
 
+/**
+ * С применением тернарных операторов.
+ * @param a
+ * @param b
+ */
+function compareNumbers2(a, b) {
+    a > 0 && b > 0
+        ? console.log(`Разность "a" и "b": ${a - b}`)
+        : a < 0 && b < 0
+            ? console.log(`Произведение "a" и "b": ${a * b}`)
+            : console.log(`Сумма "a" и "b": ${a + b}`)
+}
+
 let a, b;
 a = getRandomNumber()
 b = getRandomNumber()
@@ -28,3 +45,4 @@ b = getRandomNumber()
 console.log(`Число 'a': ${a}\nЧисло 'b': ${b}`)
 console.log("Результат работы функции: ")
 compareNumbers(a, b)
+compareNumbers2(a, b)
