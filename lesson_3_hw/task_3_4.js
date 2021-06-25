@@ -4,8 +4,9 @@
  */
 
 const asterisk = '*';
+const size = 20;
 
-for (let i = 1; i <= 20; i++) {
+for (let i = 1; i <= size; i++) {
     console.log(asterisk.repeat(i))
 }
 

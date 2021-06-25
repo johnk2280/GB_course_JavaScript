@@ -11,7 +11,7 @@ const basket = [
     ['apple', 17.5, 5],
     ['potato', 3.05, 7],
     ['cucumber', 5.75, 2.5]
-]
+];
 
 function countBasketPrice(arr) {
     let basketAmount = 0
@@ -20,4 +20,4 @@ function countBasketPrice(arr) {
     } return +basketAmount.toFixed(2)
 }
 
-console.log(countBasketPrice(basket))
+console.log(countBasketPrice(basket));

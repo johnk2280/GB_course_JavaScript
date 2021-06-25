@@ -2,6 +2,8 @@
  * 4.*Вывести с помощью цикла for числа от 0 до 9, не используя тело цикла.
  */
 
-for (let i = -1; i < 9; i++, console.log(i)) {
+const size = 9;
+
+for (let i = -1; i < size; i++, console.log(i)) {
     // здесь пусто
 }
