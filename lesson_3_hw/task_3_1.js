@@ -26,4 +26,5 @@ function sieve(num) {
     } return arr
 }
 
-console.log(sieve(100).slice(2,));
+const arraySize = 100
+console.log(sieve(arraySize).slice(2,));
