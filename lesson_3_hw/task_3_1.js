@@ -14,17 +14,16 @@ function sieve(num) {
     const arr = getArray(num);
     let i = 3;
     while (i <= num) {
-        if (arr[i] % 2 === 0) {
+        if (arr[i] !== 0 && arr[i] % 2 === 0) {
             arr[i] = 0
         } else {
             for (let j = i + 1; j < num; j++) {
-                if (arr[j] % arr[i] === 0) {
+                if (arr[j] !== 0 && arr[j] % arr[i] === 0) {
                     arr[j] = 0
                 }
             }
-        }
-        i++
+        } i++
     } return arr
 }
 
-console.log(sieve(100).slice(2,))
+console.log(sieve(100).slice(2,));
