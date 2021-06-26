@@ -5,8 +5,8 @@
  * Если число превышает 999, необходимо выдать соответствующее сообщение с помощью console.log и вернуть пустой объект.
  */
 
-function getObj(num) {
-    const numberRank = [
+function getNumberRanks(num) {
+    const numberRanks = [
         'units',
         'dozens',
         'hundreds'
@@ -18,12 +18,11 @@ function getObj(num) {
         console.log('Разрядность числа больше 3-х')
     } else {
         for (let i = 0; i < numLength; i++) {
-            result[numberRank[i]] = num % 10
+            result[numberRanks[i]] = num % 10
             num = Math.trunc(num / 10)
         }
     }
     return result
 }
 
-
-console.log(getObj(2459))
+console.log(getNumberRanks(249))
