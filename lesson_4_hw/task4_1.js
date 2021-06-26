@@ -16,14 +16,14 @@ function getObj(num) {
 
     if (numLength > 3) {
         console.log('Разрядность числа больше 3-х')
-        return result
+    } else {
+        for (let i = 0; i < numLength; i++) {
+            result[numberRank[i]] = num % 10
+            num = Math.trunc(num / 10)
+        }
     }
-
-    for (let i = 0; i < numLength; i++) {
-        result[numberRank[i]] = num % 10
-        num = Math.trunc(num / 10)
-    } return result
+    return result
 }
 
 
-console.log(getObj(245))
+console.log(getObj(2459))
