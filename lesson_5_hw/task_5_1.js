@@ -2,22 +2,21 @@
 const settings = {
     rowCount: 10,
     colCount: 10,
-    letters: ' abcdefgh ',
+    letters: ' ABCDEFGH ',
 };
 
 const chessBoard = {
     containerElement: null,
     cellCollor: false,
 
-    init(rowCount, colCount, letters) {
+    init(settings) {
         this.containerElement = document.getElementById('board');
-        this.rowCount = rowCount;
-        this.colCount = colCount;
-        this.letters = letters;
+        this.rowCount = settings.rowCount;
+        this.colCount = settings.colCount;
+        this.letters = settings.letters;
     },
 
     render() {
-
         for (let row = 0; row < this.rowCount; row++) {
             const tr = document.createElement('tr');
             this.containerElement.appendChild(tr);
@@ -30,7 +29,7 @@ const chessBoard = {
                     td.style.backgroundColor = `#000`
                 }
 
-                if ((row === 0 || row === 9) && col !== 0) {
+                if ((row === 0 || row === 9) && (col !== 0 || col !== 9)) {
                     td.style.backgroundColor = `#fff`;
                     td.innerHTML = this.letters[col];
                 }
@@ -39,13 +38,12 @@ const chessBoard = {
                     td.style.backgroundColor = `#fff`;
                     td.innerHTML = `${9 - row}`;
                 }
-
-                this.cellCollor = !this.cellCollor
+                this.cellCollor = !this.cellCollor;
             }
-            this.cellCollor = !this.cellCollor
+            this.cellCollor = !this.cellCollor;
         }
-    },
+    }
 };
 
-chessBoard.init(settings.rowCount, settings.colCount, settings.letters)
+chessBoard.init(settings)
 chessBoard.render()
