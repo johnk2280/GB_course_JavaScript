@@ -1,7 +1,9 @@
-#catalog {
+#catalog, #basket {
     border: 2px solid seagreen;
     text-align: center;
     background-color: cadetblue;
+    margin-bottom: 25px;
+    padding: 15px;
 }
 
 .catalog_product_row {
