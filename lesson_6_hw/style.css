@@ -1,0 +1,19 @@
+#catalog {
+    border: 2px solid seagreen;
+    text-align: center;
+    background-color: cadetblue;
+}
+
+.catalog_product_row {
+    border: 1px solid seagreen;
+    text-align: left;
+    margin: 5px;
+    padding: 5px;
+    background-color: darkseagreen;
+
+}
+
+.buy_button {
+    /*border: 1px solid brown;*/
+    border-radius: 5px;
+}
