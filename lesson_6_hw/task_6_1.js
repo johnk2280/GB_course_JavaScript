@@ -7,7 +7,7 @@
  */
 
 const catalog = {
-    products: [
+    catalogProducts: [
         {
             'title': 'apple',
             'price': 17.5,
@@ -31,9 +31,9 @@ const catalog = {
         this.catalogContainer = document.getElementById('catalog');
         this.catalogContainer.innerHTML = '<h2 class="div_title">Catalog</h2>';
 
-        for (let i = 0; i < this.products.length; i++) {
-            const productRow = this.renderRow(this.products[i]);
-            const buyButton = this.renderBuyButton();
+        for (let i = 0; i < this.catalogProducts.length; i++) {
+            const productRow = this.renderRow(this.catalogProducts[i]);
+            const buyButton = this.renderBuyButton(i);
             buyButton.addEventListener('click', this.addProductToBasket);
             productRow.appendChild(buyButton);
             this.catalogContainer.appendChild(productRow);
@@ -55,7 +55,7 @@ const catalog = {
     totalQuantityOfGoodsRow() {
         const div = document.createElement('div');
         div.className = 'catalog_total_quantity_of_goods';
-        if (this.products.length !== 0) {
+        if (this.catalogProducts.length !== 0) {
             div.innerHTML = `Товаров в каталоге: ${this.getTotalQuantityOfGoods()}`;
         } else {
             div.innerHTML = 'В каталоге нет товаров';
@@ -65,28 +65,30 @@ const catalog = {
         return div
     },
 
-    renderBuyButton() {
+    renderBuyButton(id) {
         const button = document.createElement('button');
         button.className = 'buy_button';
+        button.id = `${id}`
         button.innerHTML = 'Купить';
         button.style.marginLeft = `20px`;
         return button
     },
 
     getTotalQuantityOfGoods() {
-        return this.products.length
+        return this.catalogProducts.length
     },
 
     addProductToBasket(eventObj) {
-        const eventElement = eventObj.target;
-        return eventElement.parentElement.innerText
+        const idEventElement = eventObj.target.id;
+        catalog.catalogProducts[idEventElement].quantity -= 1;
+        console.log(catalog.catalogProducts)
+        // return eventElement.parentElement.innerText
     },
 };
 
 
 const basket = {
-    catalog,
-    products: [],
+    catalogProducts: [],
     basketAmount: null,
     basketContainer: null,
 
@@ -95,8 +97,8 @@ const basket = {
         this.basketContainer = document.getElementById('basket');
         this.basketContainer.innerHTML = '<h2 class="div_title">Basket</h2>';
 
-        for (let i = 0; i < this.products.length; i++) {
-            const productRow = this.renderRow(this.products[i]);
+        for (let i = 0; i < this.catalogProducts.length; i++) {
+            const productRow = this.renderRow(this.catalogProducts[i]);
             this.basketContainer.appendChild(productRow)
         }
 
@@ -118,8 +120,8 @@ const basket = {
     renderTotalPriceRow() {
         const div = document.createElement('div');
         div.className = 'total_row'
-        if (this.products.length !== 0) {
-            div.innerHTML = `В корзине товаров: ${this.products.length}, на сумму: ${this.totalBasketPrice()}`;
+        if (this.catalogProducts.length !== 0) {
+            div.innerHTML = `В корзине товаров: ${this.catalogProducts.length}, на сумму: ${this.totalBasketPrice()}`;
         } else {
             div.innerHTML = 'Корзина пуста';
         }
@@ -127,8 +129,8 @@ const basket = {
     },
 
     totalBasketPrice() {
-        for (let i = 0; i < this.products.length; i++) {
-            this.basketAmount += (this.products[i].price * this.products[i].quantity)
+        for (let i = 0; i < this.catalogProducts.length; i++) {
+            this.basketAmount += (this.catalogProducts[i].price * this.catalogProducts[i].quantity)
         }
         return +this.basketAmount.toFixed(2)
     },
