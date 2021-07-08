@@ -37,7 +37,6 @@ const catalog = {
         for (let i = 0; i < this.products.length; i++) {
             const productRow = this.renderRow(this.products[i]);
             const buyButton = this.renderBuyButton();
-            buyButton.addEventListener('click', this.addProductToBasket);
             productRow.appendChild(buyButton);
             this.catalogContainer.appendChild(productRow);
         }
@@ -80,10 +79,6 @@ const catalog = {
         return this.products.length
     },
 
-    addProductToBasket(eventObj) {
-        const eventElement = eventObj.target;
-        return eventElement.parentElement.innerText
-    },
 };
 
 
