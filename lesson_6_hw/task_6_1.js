@@ -94,15 +94,21 @@ const catalog = {
     },
 
     addProductToBasket(index) {
-        // console.log(this.basket);
-        // console.log(this.products[index]);
-        this.basket.products[index] = this.products[index];
-        this.basket.products[index].quantity = this.products.quantity
+        if (isNaN(this.basket.products[index])) {
+            this.basket.products[index] = {};
+            Object.assign(this.basket.products[index], this.products[index]);
+            // this.buffer[index] = this.products[index];
+            this.basket.products[index].quantity = 0;
+        }
+
+        this.basket.products[index].quantity += 1;
+        console.log(this.basket.products)
+        this.basket.init();
 
 
         // Object.assign(this.basket.products, this.products[index]);
-        console.log(this.basket.products[index]);
-        console.log(this.products[index]);
+        // console.log(this.basket.products[index]);
+        // console.log(this.products[index]);
     },
 
     purchaseEventHandler(eventObj) {
