@@ -49,8 +49,7 @@ const catalog = {
         div.className = 'catalog_product_row';
         div.innerHTML = `Наименование: ${product.title}; 
                         Стоимость за ед.: ${product.price}; 
-                        Количество: ${product.quantity};
-                        Полная стоимость товара: ${(product.price * product.quantity).toFixed(2)}`;
+                        Количество: ${product.quantity}`;
         return div
     },
 
