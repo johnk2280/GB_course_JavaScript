@@ -11,29 +11,31 @@ const catalog = {
         {
             'title': 'apple',
             'price': 17.5,
-            'quantity': 51
+            'quantity': 5
         },
         {
             'title': 'potato',
             'price': 3.05,
-            'quantity': 17
+            'quantity': 7
         },
         {
             'title': 'cucumber',
             'price': 5.75,
-            'quantity': 25
+            'quantity': 3
         }
     ],
     catalogContainer: null,
 
-    init() {
+    init(basket) {
+        this.basket = basket;
+
         this.catalogContainer = document.getElementById('catalog');
         this.catalogContainer.innerHTML = '<h2 class="div_title">Catalog</h2>';
 
         for (let i = 0; i < this.products.length; i++) {
             const productRow = this.renderRow(this.products[i], i);
             const buyButton = this.renderBuyButton(i);
-            buyButton.addEventListener('click', this.addProductToBasket);
+            buyButton.addEventListener('click', this.purchaseEventHandler);
             productRow.appendChild(buyButton);
             this.catalogContainer.appendChild(productRow);
         }
@@ -78,32 +80,36 @@ const catalog = {
     },
 
     reduceTheNumberOfProducts(index) {
-        catalog.products[index].quantity -= 1;
+        if (catalog.products[index].quantity > 0) {
+            catalog.products[index].quantity -= 1;
+        }
     },
 
     updateRow(parent, productId) {
         const productRow = this.renderRow(this.products[+productId], +productId);
         const buyButton = this.renderBuyButton(+productId);
-        buyButton.addEventListener('click', this.addProductToBasket);
+        buyButton.addEventListener('click', this.purchaseEventHandler);
         productRow.appendChild(buyButton);
-        console.log(parent);
-        console.log(productRow)
         parent.parentElement.replaceChild(productRow, parent);
-
-
-        // parent.textContent = `Наименование: ${catalog.products.title}; Стоимость за ед.: ${catalog.products.price}; Количество: ${catalog.products.quantity}`;
-        // console.log(parent)
-        console.log(catalog.products)
     },
 
-    addProductToBasket(eventObj) {
+    addProductToBasket(index) {
+        // console.log(this.basket);
+        // console.log(this.products[index]);
+        this.basket.products[index] = this.products[index];
+        this.basket.products[index].quantity = this.products.quantity
+
+
+        // Object.assign(this.basket.products, this.products[index]);
+        console.log(this.basket.products[index]);
+        console.log(this.products[index]);
+    },
+
+    purchaseEventHandler(eventObj) {
         const eventElement = eventObj.target;
         catalog.reduceTheNumberOfProducts(eventElement.id);
         catalog.updateRow(eventElement.parentElement, eventElement.id);
-
-        // console.log(catalog.products)
-        // console.log(eventElement.parentElement)
-        // return eventElement.parentElement.innerText
+        catalog.addProductToBasket(eventElement.id);
     },
 };
 
@@ -158,5 +164,5 @@ const basket = {
 
 };
 
-catalog.init()
+catalog.init(basket)
 basket.init()
