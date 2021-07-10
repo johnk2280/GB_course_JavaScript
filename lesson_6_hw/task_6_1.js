@@ -154,10 +154,13 @@ const basket = {
         } else {
             div.innerHTML = 'Корзина пуста';
         }
+
+        div.style.marginTop = '20px';
         return div
     },
 
     totalBasketPrice() {
+        this.basketAmount = 0;
         for (let i = 0; i < this.products.length; i++) {
             this.basketAmount += (this.products[i].price * this.products[i].quantity)
         }
