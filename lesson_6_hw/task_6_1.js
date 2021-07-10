@@ -35,7 +35,7 @@ const catalog = {
         for (let i = 0; i < this.products.length; i++) {
             const productRow = this.renderRow(this.products[i], i);
             const buyButton = this.renderBuyButton(i);
-            buyButton.addEventListener('click', this.purchaseEventHandler);
+            buyButton.addEventListener('click', this.purchaseEventHandler.bind(this));
             productRow.appendChild(buyButton);
             this.catalogContainer.appendChild(productRow);
         }
@@ -80,42 +80,38 @@ const catalog = {
     },
 
     reduceTheNumberOfProducts(index) {
-        if (catalog.products[index].quantity > 0) {
-            catalog.products[index].quantity -= 1;
+        if (this.products[index].quantity > 0) {
+            this.products[index].quantity -= 1;
         }
     },
 
     updateRow(parent, productId) {
         const productRow = this.renderRow(this.products[+productId], +productId);
         const buyButton = this.renderBuyButton(+productId);
-        buyButton.addEventListener('click', this.purchaseEventHandler);
+        buyButton.addEventListener('click', this.purchaseEventHandler.bind(this));
         productRow.appendChild(buyButton);
         parent.parentElement.replaceChild(productRow, parent);
     },
 
-    addProductToBasket(index) {
-        if (isNaN(this.basket.products[index])) {
-            this.basket.products[index] = {};
-            Object.assign(this.basket.products[index], this.products[index]);
-            // this.buffer[index] = this.products[index];
-            this.basket.products[index].quantity = 0;
+    addProductToBasket(product) {
+        for (let i = 0; i < this.basket.products.length; i++) {
+            if (product.title === this.basket.products[i].title) {
+                this.basket.products[i].quantity += 1;
+                return
+            }
         }
 
-        this.basket.products[index].quantity += 1;
-        console.log(this.basket.products)
-        this.basket.init();
-
-
-        // Object.assign(this.basket.products, this.products[index]);
-        // console.log(this.basket.products[index]);
-        // console.log(this.products[index]);
+        product = {...product};
+        product.quantity = 1;
+        this.basket.products.push(product);
     },
 
     purchaseEventHandler(eventObj) {
         const eventElement = eventObj.target;
-        catalog.reduceTheNumberOfProducts(eventElement.id);
-        catalog.updateRow(eventElement.parentElement, eventElement.id);
-        catalog.addProductToBasket(eventElement.id);
+        this.reduceTheNumberOfProducts(eventElement.id);
+        this.updateRow(eventElement.parentElement, eventElement.id);
+        this.addProductToBasket(this.products[eventElement.id]);
+        this.basket.init();
     },
 };
 
@@ -146,7 +142,7 @@ const basket = {
         div.innerHTML = `Наименование: ${product.title}; 
                         Стоимость за ед.: ${product.price}; 
                         Количество: ${product.quantity};
-                        Полная стоимость товара: ${product.price * product.quantity}`;
+                        Полная стоимость товара: ${(product.price * product.quantity).toFixed(2)}`;
         return div
     },
 
