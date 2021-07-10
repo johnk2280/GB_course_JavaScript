@@ -6,7 +6,7 @@
     padding: 15px;
 }
 
-.catalog_product_row {
+.catalog_product_row, .product_row {
     border: 1px solid seagreen;
     text-align: left;
     margin: 5px;
