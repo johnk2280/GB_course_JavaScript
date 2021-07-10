@@ -80,9 +80,7 @@ const catalog = {
     },
 
     reduceTheNumberOfProducts(index) {
-        if (this.products[index].quantity > 0) {
-            this.products[index].quantity -= 1;
-        }
+        this.products[index].quantity -= 1;
     },
 
     updateRow(parent, productId) {
@@ -108,10 +106,12 @@ const catalog = {
 
     purchaseEventHandler(eventObj) {
         const eventElement = eventObj.target;
-        this.reduceTheNumberOfProducts(eventElement.id);
-        this.updateRow(eventElement.parentElement, eventElement.id);
-        this.addProductToBasket(this.products[eventElement.id]);
-        this.basket.init();
+        if (this.products[eventElement.id].quantity > 0) {
+            this.reduceTheNumberOfProducts(eventElement.id);
+            this.updateRow(eventElement.parentElement, eventElement.id);
+            this.addProductToBasket(this.products[eventElement.id]);
+            this.basket.init();
+        }
     },
 };
 
