@@ -242,9 +242,36 @@ const game = {
         this.food.setCoordinates(this.getRandomFreeCoordinates());
         this.render();
     },
+    
+    play() {
+        this.status.setPlaying();
+        this.tickInterval = setInterval(() => this.tickHandler(), 1000 / this.config.getSpeed());
+        this.setPlayButton('Stop')
+    },
 
     stop() {
+        this.status.setStopped();
+        clearInterval(this.tickInterval);
+        this.setPlayButton('Game Over', true);
+    },
+    
+    finish() {
+        this.status.setFinished();
+        clearInterval(this.tickInterval);
+        this.setPlayButton('Start');
+    },
 
+    tickHandler() {
+
+    },
+
+    setPlayButton(text, isDisabled = false) {
+        const playButton = document.getElementById('playButton');
+        playButton.textContent = text;
+
+        isDisabled
+            ? playButton.classList.add('disabled')
+            : playButton.classList.remove('disabled');
     },
 
     getStartSnakeBody() {
@@ -270,12 +297,29 @@ const game = {
     },
 
     initEventHandlers() {
+        document.getElementById('playButton').addEventListener('click', () => {
+            this.playClickHandler();
+        });
 
+        document.getElementById('newGameButton').addEventListener('click', () => {
+            // this.newGameClickHandler();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            // this.keyDownHandler(event);
+        });
+    },
+
+    playClickHandler() {
+        if (this.status.isPlaying()) this.stop();
+        else if (this.status.isStopped()) this.play();
     },
 
     render() {
         this.map.render(this.snake.getBody(), this.food.getCoordinates())
     },
+
+
 };
 
 
