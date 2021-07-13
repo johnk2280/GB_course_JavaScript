@@ -186,7 +186,7 @@ const food = {
     },
 };
 
-status = {
+const status = {
     condition: null,
 
     setPlaying() {
@@ -252,17 +252,44 @@ const game = {
     stop() {
         this.status.setStopped();
         clearInterval(this.tickInterval);
-        this.setPlayButton('Game Over', true);
+        this.setPlayButton('Start');
     },
     
     finish() {
         this.status.setFinished();
         clearInterval(this.tickInterval);
-        this.setPlayButton('Start');
+        this.setPlayButton('Game Over', true);
     },
 
     tickHandler() {
+        if (!this.canMakeStep()) return this.finish();
+        if (this.isOnFood()) {
+            this.snake.growUp();
+            this.food.setCoordinates(this.getRandomFreeCoordinates());
 
+            if (this.gameWon()) this.finish();
+        }
+
+        this.snake.makeStep();
+        this.render();
+    },
+
+    gameWon() {
+        return this.snake.getBody().length > this.config.getWinFoodCount();
+    },
+
+    isOnFood() {
+        return this.food.isOnPoint(this.snake.getNextStepHeadPoint());
+    },
+
+    canMakeStep() {
+        const nextHeadPoint = this.snake.getNextStepHeadPoint();
+
+        return !this.snake.isOnPoint(nextHeadPoint) &&
+            nextHeadPoint.x < this.config.getColsCount() &&
+            nextHeadPoint.y < this.config.getRowsCount() &&
+            nextHeadPoint.x >= 0 &&
+            nextHeadPoint.y >= 0;
     },
 
     setPlayButton(text, isDisabled = false) {
@@ -302,11 +329,11 @@ const game = {
         });
 
         document.getElementById('newGameButton').addEventListener('click', () => {
-            // this.newGameClickHandler();
+            this.newGameClickHandler();
         });
 
         document.addEventListener('keydown', (event) => {
-            // this.keyDownHandler(event);
+            this.keyDownHandler(event);
         });
     },
 
@@ -320,6 +347,43 @@ const game = {
     },
 
 
+    newGameClickHandler() {
+        this.reset();
+    },
+
+    keyDownHandler(event) {
+        if (!this.status.isPlaying()) return;
+
+        const direction = this.getDirectionByCode(event.code);
+
+        if (this.canSetDirection(direction)) this.snake.setDirection(direction);
+    },
+
+    getDirectionByCode(code) {
+        switch (code) {
+            case 'KeyW':
+            case 'ArrowUp':
+                return 'up';
+            case 'KeyD':
+            case 'ArrowRight':
+                return 'right';
+            case 'KeyS':
+            case 'ArrowDown':
+                return 'down';
+            case 'KeyA':
+            case 'ArrowLeft':
+                return 'left';
+        }
+    },
+
+    canSetDirection(direction) {
+        const lastStepDirection = this.snake.getLastStepDirection();
+
+        return direction === 'up' && lastStepDirection !== 'down' ||
+            direction === 'right' && lastStepDirection !== 'left' ||
+            direction === 'down' && lastStepDirection !== 'up' ||
+            direction === 'left' && lastStepDirection !== 'right';
+    }
 };
 
 
