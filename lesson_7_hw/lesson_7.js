@@ -217,6 +217,7 @@ const game = {
     snake,
     food,
     status,
+    gameScore: null,
     tickInterval: null,
 
     init(userSettings = {}) {
@@ -234,6 +235,20 @@ const game = {
         this.initEventHandlers();
         this.reset();
 
+    },
+
+    /**
+     * Добавление вывода счёта в режиме реального времени.
+     */
+
+    setGameScore() {
+        this.gameScore = this.snake.getBody().length - 1;
+    },
+
+    showGameScore() {
+        this.setGameScore();
+        const score = document.getElementById('gameScore');
+        score.innerHTML = `${this.gameScore}`
     },
 
     reset() {
@@ -272,6 +287,7 @@ const game = {
 
         this.snake.makeStep();
         this.render();
+        this.showGameScore();
     },
 
     gameWon() {
